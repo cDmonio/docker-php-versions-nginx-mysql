@@ -1,0 +1,70 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - php5.4
+      - php7.3
+      - php7.4
+      - php8.1
+
+  php7.3:
+    build:
+      context: ./php7.3
+    volumes:
+      - ./php7.3:/var/www/html
+      - ./logs/php7.3:/var/log/php
+    depends_on:
+      - mysql
+
+  php5.4:
+    build:
+      context: ./php5.4
+    volumes:
+      - ./php5.4:/var/www/html
+      - ./logs/php5.4:/var/log/php
+    depends_on:
+      - mysql
+
+  php7.4:
+    build:
+      context: ./php7.4
+    volumes:
+      - ./php7.4:/var/www/html
+      - ./logs/php7.4:/var/log/php
+    depends_on:
+      - mysql
+
+  php8.1:
+    build:
+      context: ./php8.1
+    volumes:
+      - ./php8.1:/var/www/html
+      - ./logs/php8.1:/var/log/php
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      # MYSQL_DATABASE: database
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+      - ./scripts:/docker-entrypoint-initdb.d
