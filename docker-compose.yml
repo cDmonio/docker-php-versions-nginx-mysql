@@ -15,41 +15,69 @@ services:
       - php7.4
       - php8.1
 
-  php7.3:
-    build:
-      context: ./php7.3
-    volumes:
-      - ./php7.3:/var/www/html
-      - ./logs/php7.3:/var/log/php
-    depends_on:
-      - mysql
-
   php5.4:
-    build:
-      context: ./php5.4
+    image: php:5.4-fpm
+    ports:
+    - '5400:80'
+    expose:
+    - '5400'
     volumes:
       - ./php5.4:/var/www/html
       - ./logs/php5.4:/var/log/php
+      - ./php/5.4/php.ini:/usr/local/etc/php/php.ini
+      - ./php/5.4/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - mysql
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+
+  php7.3:
+    image: php:7.3-fpm
+    ports:
+    - '7300:80'
+    expose:
+    - '7300'
+    volumes:
+      - ./php7.3:/var/www/html
+      - ./logs/php7.3:/var/log/php
+      - ./php/7.3/php.ini:/usr/local/etc/php/php.ini
+      - ./php/7.3/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    depends_on:
+      - mysql
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
 
   php7.4:
-    build:
-      context: ./php7.4
+    image: php:7.4-fpm
+    ports:
+    - '7400:80'
+    expose:
+    - '7400'
     volumes:
       - ./php7.4:/var/www/html
       - ./logs/php7.4:/var/log/php
+      - ./php/7.4/php.ini:/usr/local/etc/php/php.ini
+      - ./php/7.4/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - mysql
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
 
   php8.1:
-    build:
-      context: ./php8.1
+    image: php:8.1-fpm
+    ports:
+    - '8100:80'
+    expose:
+    - '8100'
     volumes:
       - ./php8.1:/var/www/html
       - ./logs/php8.1:/var/log/php
+      - ./php/8.1/php.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./php/8.1/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - mysql
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
 
   mysql:
     image: mysql:latest

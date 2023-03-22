@@ -17,3 +17,6 @@
 /php8.1/*
 
 /scripts/*
+
+#example nginx
+!/nginx/conf.d/default.conf
