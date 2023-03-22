@@ -18,14 +18,14 @@ services:
   php5.4:
     image: php:5.4-fpm
     ports:
-    - '5400:80'
+    - '5440:80'
     expose:
-    - '5400'
+    - '5440'
     volumes:
       - ./php5.4:/var/www/html
       - ./logs/php5.4:/var/log/php
       - ./php/5.4/php.ini:/usr/local/etc/php/php.ini
-      - ./php/5.4/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      # - ./php/5.4/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini #TODO SEARCH PHP.INI
     depends_on:
       - mysql
     environment:
@@ -40,7 +40,7 @@ services:
     volumes:
       - ./php7.3:/var/www/html
       - ./logs/php7.3:/var/log/php
-      - ./php/7.3/php.ini:/usr/local/etc/php/php.ini
+      # - ./php/7.3/php.ini:/usr/local/etc/php/php.ini #TODO SEARCH PHP.INI
       - ./php/7.3/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     depends_on:
       - mysql
