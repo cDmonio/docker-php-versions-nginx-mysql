@@ -86,6 +86,7 @@ services:
       # MYSQL_DATABASE: database
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    command: mysqld --sql_mode="" --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
     ports:
       # <Port exposed> : < MySQL Port running inside container>
       - '3306:3306'
